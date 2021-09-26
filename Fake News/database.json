@@ -1,0 +1,17 @@
+{
+    "logged_in": "vishnus91@gmail.com",
+    "users": {
+        "admin": {
+            "name": "admin",
+            "password": "admin"
+        },
+        "as": {
+            "name": "as",
+            "password": "aaa"
+        },
+        "vishnus91@gmail.com": {
+            "name": "vishnu",
+            "password": "1234"
+        }
+    }
+}
