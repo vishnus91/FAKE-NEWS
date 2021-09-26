@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    *{
+        font-family: 'Courier New', Courier, monospace;
+    }
+    html{
+        height: 100%;
+    }
+
+    body{
+        margin: 0;
+        background-image: linear-gradient(rgb(70, 194, 243), rgb(238, 130, 238));
+    }
+
+    header,footer{
+        width: 100%;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        opacity: 50%;
+        text-align: center;
+        font-size: 18px;
+    }
+    header{
+        position: absolute;
+        top: 0px;
+    }
+    footer{
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .myform{
+        width: 300px;
+    }   
+
+    .container{
+        text-align: center;
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow:0 50px 50px -50px darkslategray;
+        animation: fade 2s;
+    }
+    @keyframes fade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    .txtbox{
+        border: none;
+        outline: none;
+        width:95%;
+        border: 1px solid black;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        padding: 7px;
+        font-size: 16px;
+        font-weight: bold;
+    } 
+
+    .btn{
+        font-weight: bold;
+        color: green;
+        background-color: white;
+        border: 2px solid green;
+        outline: none;
+        border-radius: 10px;
+        font-size: 16px;
+        width: 100%;
+        padding: 10px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .btn:hover{
+        background-color:green;
+        border: 2px solid green;
+        color: white;
+    } 
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTER FORM</title>
+</head>
+<body>
+    <header>
+        <p>| ANGLIA RUSKIN UNIVERSITY | SID: 1994013 | FAKE NEWS DETECTION | 2020-2021 |</p>
+    </header>
+    <div class="container">
+        <form autocomplete="off" class="myform" name="regform" method="POST" action="/login">
+            <h2>REGISTERATION FORM</h2>
+            <img src="https://image.flaticon.com/icons/png/512/4117/4117111.png" width="50%">
+            <input type="text" name="uname" class="txtbox" placeholder="Name">
+            <input type="email" name="mail" class="txtbox" placeholder="Email-ID">
+            <input type="password" name="pass1" class="txtbox" placeholder="Password">
+            <input type="password" name="pass2" class="txtbox" placeholder="Confirm Password">
+            <input type="submit" value="REGISTER NOW" class="btn" onclick="return verify()" />
+        </form>
+    </div>
+    <footer>
+        <p> © Copyright - ANGLIA RUSKIN UNIVERSITY. All rights reserved. </p>
+    </footer>
+    <script>
+        function verify()
+        {
+            var un = document.forms["regform"]["uname"].value;
+            var em = document.forms["regform"]["mail"].value;
+            var p1 = document.forms["regform"]["pass1"].value;
+            var p2 = document.forms["regform"]["pass2"].value;
+            if(p1=="" || p2=="" || un=="" || em=="" )
+            {
+                alert("Fill the form completely");
+                return false;
+            }
+            else if (p1==p2)
+            {
+                 xmlhttp = new XMLHttpRequest;
+                xmlhttp.onreadystatechange = function () {
+                  if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    // console.log(xmlhttp.responseText);
+                    var res = JSON.parse(this.responseText);
+                    alert(res["message"]);
+                    if (res["message"]=="successfully registered") {
+                        window.location.href = "/login";
+                    }
+                  }
+                }
+                xmlhttp.open("GET", "/add_new_user?uname="+un+"&&uemail="+em+"&&upassword="+p1, true);
+                xmlhttp.send();
+                return false;
+            }
+            else{
+                alert("Password Miss Match");
+            }
+        }
+    </script>
+</body>
+</html>

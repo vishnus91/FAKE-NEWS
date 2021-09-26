@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    *{
+        font-family: 'Courier New', Courier, monospace;
+    }
+    html{
+        height: 100%;
+    }
+    body{
+        margin: 0;
+        background-image: linear-gradient(rgb(70, 194, 243), rgb(238, 130, 238));
+    }
+
+    header,footer{
+        width: 100%;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        opacity: 50%;
+        text-align: center;
+        font-size: 18px;
+    }
+    header{
+        position: absolute;
+        top: 0px;
+    }
+    footer{
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .container{
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow:10px 25px 60px 10px darkslategray;
+        text-align: center;
+        animation: fade 2s;
+    }
+    @keyframes fade {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    .btn{
+        font-weight: bold;
+        color: black;
+        border: 1px solid #555555;
+        opacity: 50%;
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 15px 115px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .btn:hover{
+        opacity: 100%;
+        background-color: tomato;
+        border: 1px solid tomato;
+        -ms-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        color: white;
+    }
+    .res{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    * {
+  box-sizing: border-box;
+}
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  {#height: 300px; /* Should be removed. Only for demonstration */#}
+}
+
+.left {
+  width: 90%;
+}
+
+.right {
+  width: 10%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL MEDIA</title>
+    <script src={% url 'fontawesome' %}></script>
+</head>
+<body>
+    <header>
+        <div class="row">
+            <div class="column left">
+                <p>| ANGLIA RUSKIN UNIVERSITY | SID: 1994013 | FAKE NEWS DETECTION | 2020-2021 |</p>
+            </div>
+            <div class="column right" >
+                <p><a href="{% url 'back' %}" style="text-decoration: None;align-items: end; color: #66B0EB">
+                    <i class="fas fa-sign-out-alt"></i> Back</a> </p>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>FAKE NEWS DETECTION IN SOCIAL MEDIA </h1>
+        <br>
+        <textarea placeholder="copy paste/type the news here...." name="input_data" id="input_data" cols="80" rows="15"></textarea>
+        <br>
+        <div class="res" id = "div_result"></div>
+        <br>
+        <input type="button" value="DETECT" class="btn" onclick="predict()">
+    </div>
+    <footer>
+        <p> © Copyright - ANGLIA RUSKIN UNIVERSITY. All rights reserved. </p>
+    </footer>
+</body>
+<script>
+    function predict() {
+        document.getElementById("div_result").innerHTML = "processing...";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                document.getElementById("div_result").innerHTML = this.responseText;
+                document.getElementById("div_result").style.textTransform = "uppercase";
+                if (this.responseText == "Fake") {
+                   document.getElementById("div_result").style.color = "red";
+                   document.getElementById("div_result").style.fontSize = "x-large";
+                }
+                else if (this.responseText == "Please Enter The Social Media Text")
+                {
+                    document.getElementById("div_result").style.color = "red";
+                    document.getElementById("div_result").style.fontSize = "x-large";
+
+                }
+                else {
+                   document.getElementById("div_result").style.color = "green";
+                   document.getElementById("div_result").style.fontSize = "x-large";
+                }
+            }
+        };
+        var data = document.getElementById("input_data").value;
+        var URL="on_social_media/predict?message="+data;
+        xmlhttp.open("GET",URL,true);
+        xmlhttp.send();
+    }
+</script>
+</html>
+

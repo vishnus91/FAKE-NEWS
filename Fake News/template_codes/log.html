@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    *{
+       font-family: 'Courier New', Courier, monospace;
+   }
+
+    html{
+        height: 100%;
+    }
+
+    body{
+        margin: 0;
+        background-image: linear-gradient(rgb(70, 194, 243), rgb(238, 130, 238));
+    }
+
+    header,footer{
+        width: 100%;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        opacity: 50%;
+        text-align: center;
+        font-size: 18px;
+    }
+    header{
+        position: absolute;
+        top: 0px;
+    }
+    footer{
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .container{
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow:0 50px 50px -50px darkslategray;
+        animation: fade 2s;
+    }
+    @keyframes fade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    .myform{
+        width: 270px;
+        margin-left: 30px;
+    }
+
+    .txtbox{
+        border: none;
+        outline: none;
+        border-radius: 0;
+        width: 85%;
+        border-bottom: 2px solid #1c1c1e;
+        margin-bottom: 25px;
+        padding: 7px 0;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .btnlog,.btnreg{
+        font-weight: bold;
+        color: black;
+        background-color: white;
+        border: 2px solid #555555;
+        border-radius: 10px;
+        font-size: 16px;
+        width: 85%;
+        padding: 10px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+    .btnlog:hover,.btnreg:hover{
+        color: white;
+        border: none;
+    }
+    .btnlog:hover{
+        background-color: red;
+        border: 2px solid red;
+    }
+    .btnreg:hover{
+        background-color: green;
+        border: 2px solid green;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+
+</head>
+<body>
+    <header>
+        <p>| Anglia Ruskin University | SID: 1994013 | 2020-2021 |</p>
+    </header>
+    <div class="container">
+        <img src="https://image.freepik.com/free-vector/false-information-broadcasting-press-newspaper-journalists-editors-fake-news-junk-news-content-disinformation-media-concept-illustration_335657-2584.jpg" width="550px" height="450px">
+        <form autocomplete="off" class="myform" name="logform" method="POST">
+            <h2 id="test_header">USER LOGIN</h2><br>
+            <input type="text" name="uname" class="txtbox" placeholder="UserName">
+            <input type="password" name="pass" class="txtbox" placeholder="Password">
+            <input type="button" value="LOGIN" class="btnlog" onclick="logfun()">
+            <p style="font-weight: bold"> <----------OR----------></p>
+            <input type="button" value="REGISTER" class="btnreg" onclick="reg()">
+        </form>
+    </div>
+    <footer>
+        <p> © Copyright - ANGLIA RUSKIN UNIVERSITY. All rights reserved. </p>
+    </footer>
+    <script>
+        function logfun()
+        {
+            var un = document.forms["logform"]["uname"].value;
+            var pw = document.forms["logform"]["pass"].value;
+            if(un.length>2 && pw.length>3)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 || this.status == 200) 
+                    {
+                        var res = JSON.parse(this.responseText);
+                        alert(res["message"]);
+                        if (res["message"]=="successfully logged in") {
+                            window.location.href = "/home";
+                        }
+                    }
+                };
+                var URL="/verify_login?uname="+un+"&&upassword="+pw;
+                xmlhttp.open("GET",URL,true);
+                xmlhttp.send();
+            }
+            else
+            {
+                alert("Invalid Inputs");
+            }
+        }
+
+        function reg()
+        {
+            window.location.href="register";
+        }
+
+	    /*   Code to disable back button  */
+        history.pushState(null, null, null);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, null);
+        });
+        
+    </script>
+</body>
+</html>

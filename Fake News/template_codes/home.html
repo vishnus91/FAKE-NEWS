@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    *{
+        font-family: 'Courier New', Courier, monospace;
+    }
+    html{
+        height: 100%;
+    }
+    body{
+        margin:0;
+        background-image: linear-gradient(rgb(70, 194, 243), rgb(238, 130, 238));
+    }
+
+    header,footer{
+        width: 100%;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        opacity: 50%;
+        text-align: center;
+        font-size: 18px;
+    }
+    header{
+        position: absolute;
+        top: 0px;
+    }
+    footer{
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .container
+    {
+        background-color: white;
+        position:absolute;
+        left:50%;
+        top :40%;
+        transform: translate(-50%,-50%);
+
+        margin: 50px auto 0;
+        display: table;
+        box-sizing: border-box;
+        border-radius: 20px;
+        border-spacing: 20px;
+
+        padding: 10px;
+        box-shadow:0 50px 50px -50px darkslategray;
+        animation: fade 2s;
+    }
+    @keyframes fade {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    .row
+    {
+        margin: 0;
+        font-size: 25px;
+        text-align: center;
+    }
+    .column
+    {
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 15%;
+        display: table-cell;
+        padding: 15px;
+        width: 250px;
+        text-align: center;
+        vertical-align: bottom;
+
+        color: black;
+        border: 3px solid #000;
+        cursor: pointer;
+    }
+
+    .column:hover{
+        background-image: linear-gradient(rgb(178, 221, 238) ,rgb(241, 202, 208) );
+        -ms-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+    .btn{
+        font-weight: bold;
+        color: black;
+        border: 2px solid #555555;
+        outline: none;
+        border-radius: 10px;
+        font-size: 15px;
+        padding: 5px 30px;
+        transition-duration: 0.2s;
+        cursor: pointer;
+    }
+
+    .btn:hover{
+        opacity: 100%;
+        border: 2px solid #555555;
+        -ms-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+</head>
+<body>
+    <header>
+        <p>| ANGLIA RUSKIN UNIVERSITY | SID: 1994013 | FAKE NEWS DETECTION | 2020-2021 |</p>
+    </header>
+   <div class="container">
+       <div class="row">
+            <h1>FAKE NEWS DETECTION</h1>
+       </div>
+
+       <div class="row">
+           <div class="column" onclick="goto('on_article')">
+            <img src="https://image.flaticon.com/icons/png/512/2680/2680900.png" width="65%" >
+            <br>
+               FAKE NEWS IN ARTICLES
+           </div>
+               <div class="column" onclick="goto('on_job_portal')">
+               <img src="https://image.flaticon.com/icons/png/512/2936/2936630.png" width="65%">
+               <br>
+               FAKE NEWS IN JOB PORTAL
+           </div>
+           <div class="column" onclick="goto('on_social_media')">
+            <img src="https://image.flaticon.com/icons/png/512/1968/1968750.png" width="65%">
+            <br>
+               FAKE NEWS IN SOCIAL MEDIA
+           </div>
+           <br/>
+           <div class="row" onclick="goto('login')">
+            <input type="button" value="LOGOUT" class="btn" onclick="logout()">
+           </div>
+       </div>
+   </div>
+    <footer>
+        <p> © Copyright - ANGLIA RUSKIN UNIVERSITY. All rights reserved. </p>
+    </footer>
+    <script>
+        function goto(to)
+        {
+            window.location.href= to;
+        }
+        function logout() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 || this.status == 200) 
+                {
+                    var res = JSON.parse(this.responseText);
+                    if (res["message"]=="successfully logged out") {
+                        window.location.href = "/home";
+                    }
+                }
+            };
+            var URL="/logout";
+            xmlhttp.open("GET",URL,true);
+            xmlhttp.send();
+        }
+    </script>
+
+</body>
+</html>
